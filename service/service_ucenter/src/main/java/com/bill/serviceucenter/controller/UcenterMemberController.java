@@ -3,13 +3,10 @@ package com.bill.serviceucenter.controller;
 
 import com.bill.commonutils.R;
 import com.bill.serviceucenter.entity.UcenterMember;
+import com.bill.serviceucenter.entity.vo.RegisterVo;
 import com.bill.serviceucenter.service.UcenterMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -20,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-08-15
  */
 @RestController
-@RequestMapping("/serviceucenter/ucenter-member")
+@RequestMapping("/serviceucenter/member")
 public class UcenterMemberController {
 
     @Autowired
@@ -28,9 +25,16 @@ public class UcenterMemberController {
 
     @PostMapping("login")
     public R loginUser(@RequestBody UcenterMember ucenterMember) {
-       String token = ucenterMemberService.login(ucenterMember);
+        String token = ucenterMemberService.login(ucenterMember);
         return R.ok().data("token", token);
     }
+
+    @PostMapping("register")
+    public R registerUser(@RequestBody RegisterVo registerVo) {
+        ucenterMemberService.register(registerVo);
+        return R.ok();
+    }
+
 
 }
 
