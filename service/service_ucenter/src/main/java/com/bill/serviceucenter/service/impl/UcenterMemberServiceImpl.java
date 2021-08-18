@@ -48,6 +48,20 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
             throw new CustomException(20001,"登录失败");
         }
 
+
+        //判断密码
+        //因为存储到数据库密码肯定加密的
+        //把输入的密码进行加密，再和数据库密码进行比较
+        //加密方式 MD5
+        if(!MD5.encrypt(password).equals(mobileMember.getPassword())) {
+            throw new CustomException(20001,"登录失败");
+        }
+
+        //判断用户是否禁用
+        if(mobileMember.getIsDisabled()) {
+            throw new CustomException(20001,"登录失败");
+        }
+
         String token = JwtUtils.getJwtToken(mobileMember.getId(), mobileMember.getNickname());
         return token;
     }

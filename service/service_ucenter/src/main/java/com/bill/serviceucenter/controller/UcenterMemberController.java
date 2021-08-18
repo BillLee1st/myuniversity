@@ -1,12 +1,15 @@
 package com.bill.serviceucenter.controller;
 
 
+import com.bill.commonutils.JwtUtils;
 import com.bill.commonutils.R;
 import com.bill.serviceucenter.entity.UcenterMember;
 import com.bill.serviceucenter.entity.vo.RegisterVo;
 import com.bill.serviceucenter.service.UcenterMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -35,6 +38,11 @@ public class UcenterMemberController {
         return R.ok();
     }
 
-
+    @PostMapping("getMemberInfo")
+    public R getMemberInfo(HttpServletRequest request) {
+        String memberId = JwtUtils.getMemberIdByJwtToken(request);
+        UcenterMember member = ucenterMemberService.getById(memberId);
+        return R.ok().data("userInfo",member);
+    }
 }
 
