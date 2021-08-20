@@ -3,6 +3,7 @@ package com.bill.serviceorder.controller;
 
 import com.bill.commonutils.JwtUtils;
 import com.bill.commonutils.R;
+import com.bill.serviceorder.entity.Order;
 import com.bill.serviceorder.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,10 +30,16 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("/save")
+    @PostMapping("/save/{courseId}")
     public R saveOrder(@PathVariable String courseId, HttpServletRequest request) {
         String orderId = orderService.saveOrder(courseId, JwtUtils.getMemberIdByJwtToken(request));
         return R.ok().data("orderId", orderId);
+    }
+
+    @PostMapping("/getOrderInfo/{orderId}")
+    public R getOrderInfo(@PathVariable String orderId) {
+        Order order = orderService.getById(orderId);
+        return R.ok().data("orderInfo",order);
     }
 
 }
