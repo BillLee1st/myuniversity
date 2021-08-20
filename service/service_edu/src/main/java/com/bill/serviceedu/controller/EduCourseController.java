@@ -2,8 +2,10 @@ package com.bill.serviceedu.controller;
 
 
 import com.bill.commonutils.R;
+import com.bill.commonutils.ordervo.CourseWebVoOrder;
 import com.bill.serviceedu.entity.vo.CourseInfoVo;
 import com.bill.serviceedu.service.EduCourseService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +41,14 @@ public class EduCourseController {
     public R updateCourseInfo(@RequestBody CourseInfoVo courseInfoVo) {
         String courseId = eduCourseService.updateCourseInfo(courseInfoVo);
         return R.ok().data("courseId", courseId);
+    }
+
+    @PostMapping("/getCourseInfoWeb/{courseId}")
+    public CourseWebVoOrder getCourseInfoWeb(@PathVariable("courseId") String courseId) {
+        CourseInfoVo courseInfoVo = eduCourseService.getCourseInfoById(courseId);
+        CourseWebVoOrder courseWebVoOrder = new CourseWebVoOrder();
+        BeanUtils.copyProperties(courseInfoVo, courseWebVoOrder);
+        return courseWebVoOrder;
     }
 }
 

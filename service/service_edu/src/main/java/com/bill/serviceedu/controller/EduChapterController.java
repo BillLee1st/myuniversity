@@ -26,6 +26,7 @@ public class EduChapterController {
     private EduChapterService eduChapterService;
 
 
+
     @GetMapping("getChapterVideo/{courseId}")
     public R getChapterVideo(@PathVariable("courseId") String courseId) {
         List<ChapterVo> list =  eduChapterService.getChapterVideoByCourseId(courseId);
