@@ -3,9 +3,11 @@ package com.bill.serviceucenter.controller;
 
 import com.bill.commonutils.JwtUtils;
 import com.bill.commonutils.R;
+import com.bill.commonutils.ordervo.UcenterMemberOrder;
 import com.bill.serviceucenter.entity.UcenterMember;
 import com.bill.serviceucenter.entity.vo.RegisterVo;
 import com.bill.serviceucenter.service.UcenterMemberService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,5 +46,14 @@ public class UcenterMemberController {
         UcenterMember member = ucenterMemberService.getById(memberId);
         return R.ok().data("userInfo",member);
     }
+
+    @PostMapping("/getUserInfoOrder/{id}")
+    public UcenterMemberOrder getUserInfoOrder(@PathVariable String id) {
+        UcenterMember member = ucenterMemberService.getById(id);
+        UcenterMemberOrder ucenterMemberOrder = new UcenterMemberOrder();
+        BeanUtils.copyProperties(member,ucenterMemberOrder);
+        return ucenterMemberOrder;
+    }
+
 }
 
