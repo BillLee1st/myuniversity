@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
  *
  */
 @SpringBootApplication
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 @ComponentScan(basePackages = {"com.bill"})
 @MapperScan("com.bill.serviceucenter.mapper")
 public class UcenterApplication{
